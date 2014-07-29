@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    
+    <!--LOGIN-->
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>edu.vt.cs5244.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/servlet/LoginServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>login</servlet-name>
+        <jsp-file>/login/login.jsp</jsp-file>
+    </servlet>
+   
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/login/login.jsp</url-pattern>
+    </servlet-mapping>
+
+    
+    <!--REGISTRATION-->
+    <servlet>
+        <servlet-name>RegistServlet</servlet-name>
+        <servlet-class>edu.vt.cs5244.RegistServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>RegistServlet</servlet-name>
+        <url-pattern>/servlet/RegistServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>registration</servlet-name>
+        <jsp-file>/registration/registration.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>registration</servlet-name>
+        <url-pattern>/registration/registration.jsp</url-pattern>
+    </servlet-mapping>
+    
+    <!--MAIN PLAYER PAGE-->
+    <servlet>
+        <servlet-name>MainPlayerServlet</servlet-name>
+        <servlet-class>edu.vt.cs5244.MainPlayerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MainPlayerServlet</servlet-name>
+        <url-pattern>/servlet/MainPlayerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>mainplayer</servlet-name>
+        <jsp-file>/game/mainplayer.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mainplayer</servlet-name>
+        <url-pattern>/game/mainplayer.jsp</url-pattern>
+    </servlet-mapping>
+    
+    <!--OFFERRED GAME PAGE-->
+    <servlet>
+        <servlet-name>offeredGames</servlet-name>
+        <jsp-file>/game/offeredGames.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>offeredGames</servlet-name>
+        <url-pattern>/game/offeredGames.jsp</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>OfferedGamesServlet</servlet-name>
+        <servlet-class>edu.vt.cs5244.OfferedGamesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OfferedGamesServlet</servlet-name>
+        <url-pattern>/servlet/OfferedGamesServlet</url-pattern>
+    </servlet-mapping>
+    
+    <!--START GAME PAGE-->
+    <servlet>
+        <servlet-name>startGame</servlet-name>
+        <jsp-file>/game/startGame.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>startGame</servlet-name>
+        <url-pattern>/game/startGame.jsp</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>StartGameServlet</servlet-name>
+        <url-pattern>/servlet/StartGameServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>StartGameServlet</servlet-name>
+        <servlet-class>edu.vt.cs5244.StartGameServlet</servlet-class>
+    </servlet>
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+</web-app>
