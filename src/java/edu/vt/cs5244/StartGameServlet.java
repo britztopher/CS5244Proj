@@ -43,11 +43,84 @@ public class StartGameServlet extends HttpServlet {
         
         //request parameters
         String size = request.getParameter("size");
+        String dabCmd = request.getParameter("command");
+        String dabCol = request.getParameter("draw_col");
+        String dabRow = request.getParameter("draw_row");
+        String dabEdge = request.getParameter("draw_edge");
+        String dabSize = request.getParameter("init_size");
+       
+        try{
+            
+            Game thisGame = (Game)session.getAttribute("game");
+            GameCollection gameMap = (GameCollection)application.getAttribute("gameMap");
+            
+            if(thisGame == null){
+                thisGame = new Game(Integer.parseInt(size));
+                session.setAttribute("game", thisGame);
+                response.sendRedirect("../startGame.jsp?status=initMv"); return;
+            }
+             
+            if (dabCmd.equalsIgnoreCase("draw")) {
+               
+                try {
+                    thisGame.getTheDAB().drawEdge(Integer.parseInt(dabRow), Integer.parseInt(dabCol), Util.parseEdge(dabEdge));
+                    response.sendRedirect("../startGame.jsp?status=drawsuccess");
+                    return;
+
+                } catch (NumberFormatException nfe) {
+                    response.sendRedirect("../startGame.jsp?status=drawnfe");
+                    return;
+                }
+                
+            } else if("offerGame".equalsIgnoreCase(dabCmd)){
+                
+                if(gameMap == null){
+                    //since no game exists yet set gameId = 1 for the first game
+                    thisGame.setGameId(1);
+                    
+                    //TODO: maybe need a check for null on loggedInUser incase of session timeout?
+                    thisGame.setOfferorUN((String)session.getAttribute("loggedInUser"));
+                    //instantiate the game collection for the first time passing
+                    //in the first game
+                    gameMap = new GameCollection(thisGame);
+                    //set the application object, so we can find this collection
+                    //later on
+                    application.setAttribute("gameMap", gameMap);
+                    session.removeAttribute("game");
+                   
+                    response.sendRedirect("../offeredGames.jsp");
+                    return;
+                }else{
+                    //get MaxId in the keyset of the map and add 1
+                    thisGame.setGameId(gameMap.getMaxId()+1);
+                    thisGame.setOfferorUN((String)session.getAttribute("loggedInUser"));
+                    
+                    gameMap.getGameMap().put(thisGame.getGameId(), thisGame);
+                    session.removeAttribute("game");
+                    response.sendRedirect("../offeredGames.jsp"); return;
+                }
+
+            }else if("resetGame".equalsIgnoreCase(dabCmd)){
+                session.removeAttribute("game");
+                response.sendRedirect("../startGame.jsp"); return;
+                
+            }else {
+                response.sendRedirect("../startGame.jsp?status=invalidCmd");
+                return;
+
+            }
+            
+        }catch (DABException dabe) {
+            session.setAttribute("message", "INIT: Board Size of " + dabSize + " not Supported.");
+        } catch (NumberFormatException nfe) {
+            session.setAttribute("message", "INIT: Size value must be numeric");
+        } catch (NullPointerException npe) {
+            session.setAttribute("message", "Please select a Valid Command.");
+        }
         
-        Game thisGame = new Game(Integer.parseInt(size));
-        session.setAttribute("game", thisGame);
-        response.sendRedirect("../game/startGame.jsp"); return;
-        
+        response.sendRedirect("../startGame.jsp");
+        return;
+    
     }
         
                 

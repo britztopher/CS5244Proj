@@ -19,12 +19,14 @@ public class Game {
     private String userNameTwo;
     private int gameId;
     private String offerorUN;
-    private DABEngine theDAB;
+    private final DABEngine theDAB;
+    private final int boardSize;
     
     public Game(int size){
         
         theDAB = new ProjHtmlDAB(new HW3HtmlDAB(new SafeHW1_DAB(new HW1_DAB())));
         theDAB.init(size);
+        this.boardSize = size;
     }
     
     public ProjHtmlDAB getTheDAB(){
@@ -32,4 +34,39 @@ public class Game {
         return (ProjHtmlDAB)theDAB;
     }
     
+    public int getGameId(){
+        return this.gameId;
+    }
+    
+    public void setGameId(int gameId){
+        this.gameId = gameId;
+    }
+    
+    public String getUserNameOne(){
+        return this.userNameOne;
+    }
+        
+    public void setUserNameOne(String userNameOne){
+        this.userNameOne = userNameOne;
+    }
+        
+    public String getUserNameTwo(){
+        return this.userNameTwo;
+    }
+    
+    public void getUserNameTwo(String userNameTwo){
+        this.userNameTwo = userNameTwo;
+    }
+        
+    public String getOfferorUN(){
+        return this.offerorUN;
+    }
+    
+    public void setOfferorUN(String offerorUN){
+        this.offerorUN = offerorUN;
+    }
+        
+    public int getBoardSize(){
+        return this.boardSize;
+    }   
 }
