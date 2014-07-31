@@ -29,8 +29,10 @@
                 //offer a new Game link
             }else{
                 //display collection of games
-                for(Game game : gameMap.getGameMap().values()){
+                for(Game game : gameMap.getOfferedGames(user).values()){
                     String href = "acceptGame.jsp?gameId="+game.getGameId();
+                    //if the logged in user is the one that offered the game
+                    //dont show href link to accept page
                     if(session.getAttribute("loggedInUser").equals(game.getOfferorUN())){
                         %><li><b><%=game.getOfferorUN()%></b>:&nbsp;Game #<%=game.getGameId()%>&nbsp;(size&nbsp;<%=game.getBoardSize()%>)</li><%
                     }else{

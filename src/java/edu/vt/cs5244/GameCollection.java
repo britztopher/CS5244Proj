@@ -40,7 +40,33 @@ public class GameCollection {
         
         System.out.println("MAXKEY: "+ maxKey);
         
-        return (Integer)maxKey;
+        return maxKey;
+    }
+    
+    public synchronized HashMap<Integer, Game> getAcceptedGamesByUser(String user){
+        HashMap<Integer, Game> acceptedMap = new HashMap<>();
+        
+        for(Game game : this.gameMap.values()){
+            
+            if(game.getAcceptor()!= null && game.getAcceptor().equals(user)){
+                acceptedMap.put(game.getGameId(), game);
+            }
+        }
+        
+        return acceptedMap;
+    }
+    
+    public synchronized HashMap<Integer, Game> getOfferedGames(String user){
+        HashMap<Integer, Game> offeredMap = new HashMap<>();
+        
+        for(Game game : this.gameMap.values()){
+            
+            if(game.getAcceptor()==null){
+                offeredMap.put(game.getGameId(), game);
+            }
+        }
+        
+        return offeredMap;
     }
     
 }

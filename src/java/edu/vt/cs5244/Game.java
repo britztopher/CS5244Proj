@@ -21,6 +21,8 @@ public class Game {
     private String offerorUN;
     private final DABEngine theDAB;
     private final int boardSize;
+    private boolean isAccepted;
+    private String acceptedUser;
     
     public Game(int size){
         
@@ -54,7 +56,7 @@ public class Game {
         return this.userNameTwo;
     }
     
-    public void getUserNameTwo(String userNameTwo){
+    public void setUserNameTwo(String userNameTwo){
         this.userNameTwo = userNameTwo;
     }
         
@@ -69,4 +71,25 @@ public class Game {
     public int getBoardSize(){
         return this.boardSize;
     }   
+    
+    public String getAcceptor(){
+        return this.acceptedUser;
+    }
+    
+    public void setAcceptor(String user){
+        this.acceptedUser = user;
+    }
+ 
+    
+    public boolean isOver(){
+        boolean isOver = false;
+        
+        Player turn = this.theDAB.getTurn();
+       
+       if(turn==null){
+           isOver = true;
+       }
+       
+       return isOver;
+    }
 }

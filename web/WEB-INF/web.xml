@@ -99,7 +99,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AcceptGameServlet</servlet-name>
-        <url-pattern>/game/edu.vt.cs5244.AcceptGameServlet</url-pattern>
+        <url-pattern>/game/servlet/edu.vt.cs5244.AcceptGameServlet</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>AcceptGameServlet</servlet-name>

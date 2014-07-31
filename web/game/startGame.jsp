@@ -80,7 +80,7 @@
            
         
         
-        <h2><a href="mainPlayer.jsp">Current Games</a></h2>
+        <h2><a href="mainplayer.jsp">Current Games</a></h2>
         <h2><a href="completedGames.jsp">Completed Games</a></h2>
         <h2><a href="offeredGames.jsp">Offered Games</a></h2>
         <a href="startGame.jsp">Refresh</a><br>

@@ -8,10 +8,12 @@ package edu.vt.cs5244;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,17 +33,36 @@ public class AcceptGameServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AcceptGameServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AcceptGameServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+                 
+         //get the Session object
+        HttpSession session = request.getSession();
+
+        //get the context
+        ServletContext application = getServletConfig().getServletContext();
+        
+        //request parameters
+        String gameId = request.getParameter("gameid");
+        String cmd = request.getParameter("command");
+        
+       
+        try{
+            GameCollection gameMap = (GameCollection)application.getAttribute("gameMap");
+            Game game = gameMap.getGameMap().get(Integer.parseInt(gameId));
+            
+            if("normal".equals(cmd)){
+                game.setUserNameTwo((String)session.getAttribute("loggedInUser"));
+                game.setAcceptor((String)session.getAttribute("loggedInUser"));
+            }else if("reversed".equals(cmd)){
+                game.setUserNameOne(game.getOfferorUN());
+                game.setAcceptor(game.getOfferorUN());
+            }else{
+                //invalid command
+            }
+            
+            response.sendRedirect("../playgame.jsp"); return;
+            
+        }catch(NumberFormatException nfe){
+            response.sendRedirect("../acceptGame.jsp?status=gamenfe"); return;
         }
     }
 
