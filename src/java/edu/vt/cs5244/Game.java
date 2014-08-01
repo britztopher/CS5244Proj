@@ -80,6 +80,16 @@ public class Game {
         this.acceptedUser = user;
     }
  
+    public String whosTurn(){
+         Player currPlyr = this.getTheDAB().getTurn();
+         String currTurn = this.getUserNameTwo();
+         
+        if(currPlyr.equals(Player.ONE)){
+            currTurn = this.getUserNameOne();
+        }
+        
+        return currTurn;
+    }
     
     public boolean isOver(){
         boolean isOver = false;

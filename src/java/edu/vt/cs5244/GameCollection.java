@@ -28,7 +28,7 @@ public class GameCollection {
         return this.gameMap;
     }
     
-    public synchronized Integer getMaxId(){
+    public synchronized Integer getNextGameId(){
         
         Integer maxKey = Integer.MIN_VALUE;
         
@@ -38,9 +38,7 @@ public class GameCollection {
             }
         }
         
-        System.out.println("MAXKEY: "+ maxKey);
-        
-        return maxKey;
+        return maxKey + 1;
     }
     
     public synchronized HashMap<Integer, Game> getAcceptedGamesByUser(String user){
@@ -48,8 +46,12 @@ public class GameCollection {
         
         for(Game game : this.gameMap.values()){
             
-            if(game.getAcceptor()!= null && game.getAcceptor().equals(user)){
-                acceptedMap.put(game.getGameId(), game);
+            if(game.getAcceptor()!= null){
+                
+                if(user.equals(game.getUserNameOne()) || user.equals(game.getUserNameTwo())){
+                    acceptedMap.put(game.getGameId(), game);
+                }
+                
             }
         }
         

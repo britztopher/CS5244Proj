@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author christopherbritz
  */
-public class AcceptGameServlet extends HttpServlet {
+public class PlayGameServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,8 +33,8 @@ public class AcceptGameServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-                 
-         //get the Session object
+       
+          //get the Session object
         HttpSession session = request.getSession();
 
         //get the context
@@ -43,28 +43,60 @@ public class AcceptGameServlet extends HttpServlet {
         //request parameters
         String gameId = request.getParameter("gameId");
         String cmd = request.getParameter("command");
+        String dabCol = request.getParameter("draw_col");
+        String dabRow = request.getParameter("draw_row");
+        String dabEdge = request.getParameter("draw_edge");
+        boolean isDrawn = false;
         
        
         try{
             GameCollection gameMap = (GameCollection)application.getAttribute("gameMap");
             Game game = gameMap.getGameMap().get(Integer.parseInt(gameId));
             
-            if("normal".equals(cmd)){
-                game.setUserNameTwo((String)session.getAttribute("loggedInUser"));
-                game.setUserNameOne(game.getOfferorUN());
-                game.setAcceptor((String)session.getAttribute("loggedInUser"));
-            }else if("reversed".equals(cmd)){
-                game.setUserNameTwo(game.getOfferorUN());
-                game.setUserNameOne((String)session.getAttribute("loggedInUser"));
-                game.setAcceptor((String)session.getAttribute("loggedInUser"));
-            }else{
-                //invalid command
+            if ("draw".equals(cmd)) {
+
+                Player turn = null;
+                
+                try {
+
+                    turn = game.getTheDAB().getTurn();
+                    isDrawn = game.getTheDAB().drawEdge(Integer.parseInt(dabRow), Integer.parseInt(dabCol), Util.parseEdge(dabEdge));
+
+                    if (!isDrawn) {
+                        //, "DRAW(" + dabRow + ", " + dabCol + ", " + dabEdge + ") Line Already Drawn."
+                         response.sendRedirect("../playGame.jsp?status=edgeexists&gameId="+gameId); return;
+                    } else {
+                        //"DRAW(" + dabRow + ", " + dabCol + ", " + dabEdge + ") Success!"
+                        response.sendRedirect("../playGame.jsp?status=edgeDrawn&gameId="+gameId); return;
+                    }
+                } catch (DABException dabe) {
+                    if (turn == null) {
+                        //Game is over
+                        response.sendRedirect("../playGame.jsp?status=gameovr&gameId="+gameId); return;
+                    } else if ( dabEdge == null){
+                        //"DRAW: Edge value must be selected from clickable grid."
+                        response.sendRedirect("../playGame.jsp?status=edgeErr&gameId="+gameId);return;
+                    }else if( dabEdge.equalsIgnoreCase("none")){
+                        //DRAW: Edge value must be selected from the drop-down box.
+                        response.sendRedirect("../playGame.jsp?status=edgenone&gameId="+gameId); return;                        
+                    }else{
+                        //DRAW: Location is Out of Bounds.
+                        response.sendRedirect("../playGame.jsp?status=edgeoob&gameId="+gameId); return;                   
+                    }
+                } catch (NumberFormatException nfe) {
+                    //"DRAW: Row and Col values must both be numeric.
+                    response.sendRedirect("../playGame.jsp?status=edgenfe&gameId="+gameId); return;
+                }
+
+            } else {
+                //Please select a Valid Command
+                response.sendRedirect("../playGame.jsp?status=invldcmd&gameId="+gameId); return;
+
             }
             
-            response.sendRedirect("../playGame.jsp?gameId="+gameId); return;
-            
         }catch(NumberFormatException nfe){
-            response.sendRedirect("../acceptGame.jsp?status=gamenfe"); return;
+            //Could not parse gameid
+            response.sendRedirect("../playGame.jsp?status=gamenfe&gameId="+gameId); return;
         }
     }
 

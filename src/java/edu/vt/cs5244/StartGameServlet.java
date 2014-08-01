@@ -92,7 +92,7 @@ public class StartGameServlet extends HttpServlet {
                     return;
                 }else{
                     //get MaxId in the keyset of the map and add 1
-                    thisGame.setGameId(gameMap.getMaxId()+1);
+                    thisGame.setGameId(gameMap.getNextGameId());
                     thisGame.setOfferorUN((String)session.getAttribute("loggedInUser"));
                     
                     gameMap.getGameMap().put(thisGame.getGameId(), thisGame);

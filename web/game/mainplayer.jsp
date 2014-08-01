@@ -4,6 +4,7 @@
     Author     : christopherbritz
 --%>
 
+<%@page import="edu.vt.cs5244.Player"%>
 <%@page import="edu.vt.cs5244.Game"%>
 <%@page import="edu.vt.cs5244.GameCollection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -19,39 +20,56 @@
         <title>Main Page</title>
     </head>
     <body>
+        <h1>Welcome <%=user%>!</h1>
+        <h2>Current Games</h2>
+        <h3>My Turn:</h3>
         <%  
             GameCollection gameMap = (GameCollection)application.getAttribute("gameMap"); 
-            %><ul><%
+           
             if(gameMap == null){
                 //offer a new Game link
             }else{
                 //display collection of games
                 for(Game game : gameMap.getAcceptedGamesByUser(user).values()){
-                    String href = "playgame.jsp?gameId="+game.getGameId();
-                    
-                    if(session.getAttribute("loggedInUser").equals(game.getOfferorUN())){
-                        %><li><b><%=game.getOfferorUN()%></b>:&nbsp;Game #<%=game.getGameId()%>&nbsp;(size&nbsp;<%=game.getBoardSize()%>)</li><%
-                    }else{
-                        //show link
-                        %><li><%=game.getOfferorUN()%>:&nbsp;<a href="<%=href%>">Game #<%=game.getGameId()%>&nbsp;(size&nbsp;<%=game.getBoardSize()%>)</a></li><%
+                    String href = "playGame.jsp?gameId="+game.getGameId();                    
+                     %><ul><%
+                    if(game.whosTurn().equals(user)){
+                         if(user.equals(game.getUserNameOne())){
+                            %><li><a href="<%=href%>"><%=game.getUserNameOne()%>&nbsp;vs.&nbsp<%=game.getUserNameTwo()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
+                        }else{
+                             %><li><a href="<%=href%>"><%=game.getUserNameTwo()%>&nbsp;vs.&nbsp<%=game.getUserNameOne()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
+                        }
                     }
-                }   
+                    %></ul><%
+                }
+                
+            //TODO: NEED TO REFACTOR THIS AREA BECAUSE THERE IS SOME CODE REDUNDANCY
+            //MAYBE MOVE IT INTO ITS OWN METHOD WITHIN GAME OBJECT    
+            %><h3>Opponents Turn:</h3><%
+            
+             for(Game game : gameMap.getAcceptedGamesByUser(user).values()){
+                 //might need to synchronize this because i can see where the href could get overwritten
+                    String href = "playGame.jsp?gameId="+game.getGameId();                    
+                     %><ul><%
+                    if(!game.whosTurn().equals(user)){
+                        
+                        if(!user.equals(game.getUserNameOne())){
+                            %><li><a href="<%=href%>"><%=game.getUserNameOne()%>&nbsp;vs.&nbsp<%=game.getUserNameTwo()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
+                        }else{
+                             %><li><a href="<%=href%>"><%=game.getUserNameTwo()%>&nbsp;vs.&nbsp<%=game.getUserNameOne()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
+                        }
+                    }
+                    %></ul><%
+                }
             }
-            %><li><a href="startGame.jsp">Offer New Game</a></li>    
-            <ul/><%
+              %><li><a href="startGame.jsp">Offer New Game</a></li>    
+            </ul><%
            
         %>
-        <h1>Welcome <%=user%>!</h1>
-        <h2>Current Games</h2>
-        <h3>My Turn:</h3>
-        <ul>
+    
+       
         
-        </ul>
-        
-        <h3>Opponent's Turn:</h3>
-        <ul>
-        
-        </ul>
+
         <h2><a href="completedGames.jsp">Completed Games</a></h2>
         <h2><a href="offeredGames.jsp">Offered Games</a></h2>
         <a href="mainPlayer.jsp">Refresh</a><br>

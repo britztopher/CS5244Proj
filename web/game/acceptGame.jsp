@@ -44,8 +44,8 @@
          <h3>Accept this game as:</h3>
          <br/>
          <ul>
-             <li><a href="servlet/edu.vt.cs5244.AcceptGameServlet?command=normal&gameid=<%=gameId%>">Normal</a>: You will be player TWO, and you will move next</li>
-             <li><a href="">Reversed</a>: You will be player ONE, and the move above will become your first move</li>
+             <li><a href="servlet/edu.vt.cs5244.AcceptGameServlet?command=normal&gameId=<%=gameId%>">Normal</a>: You will be player TWO, and you will move next</li>
+             <li><a href="servlet/edu.vt.cs5244.AcceptGameServlet?command=reversed&gameId=<%=gameId%>">Reversed</a>: You will be player ONE, and the move above will become your first move</li>
          </ul>
     </body>
 </html>

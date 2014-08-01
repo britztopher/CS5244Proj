@@ -5,7 +5,6 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>edu.vt.cs5244.LoginServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/servlet/LoginServlet</url-pattern>
@@ -86,10 +85,8 @@
         <servlet-name>StartGameServlet</servlet-name>
         <servlet-class>edu.vt.cs5244.StartGameServlet</servlet-class>
     </servlet>
-
-    
-   <!--ACCEPT GAME PAGE-->
-   <servlet>
+    <!--ACCEPT GAME PAGE-->
+    <servlet>
         <servlet-name>acceptGame</servlet-name>
         <jsp-file>/game/acceptGame.jsp</jsp-file>
     </servlet>
@@ -105,12 +102,34 @@
         <servlet-name>AcceptGameServlet</servlet-name>
         <servlet-class>edu.vt.cs5244.AcceptGameServlet</servlet-class>
     </servlet>
+   
     
     
+    <!--PLAY GAME PAGE-->
+    <servlet>
+        <servlet-name>playGame</servlet-name>
+        <jsp-file>/game/playGame.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>playGame</servlet-name>
+        <url-pattern>/game/playGame.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PlayGame</servlet-name>
+        <servlet-class>edu.vt.cs5244.PlayGameServlet</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>PlayGame</servlet-name>
+        <url-pattern>/game/servlet/edu.vt.cs5244.PlayGameServlet</url-pattern>
+    </servlet-mapping>
     
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-</web-app>
+
+    
+    
+    P
+    </web-app>
