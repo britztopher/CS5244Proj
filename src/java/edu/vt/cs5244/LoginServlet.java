@@ -50,24 +50,28 @@ public class LoginServlet extends HttpServlet {
         
         UserCollection userMap = (UserCollection)application.getAttribute("userMap");
         
-        //if no one has registered before what do we do with user map?  Create it?
-        //response with registration required
-//        if(userMap ==null){
-//            //TODO: if map is null
-//        }else{
-//            User user = userMap.getUserMap().get(un);
-           
-//            //if user DNE
-//            if(user==null){
-//                //user DNE 
-//            }else if(user.getPassword().equals(pw)){ //if user pw = entered pw
-//                
-//            }
+        
+        if(un == null && pw == null){
+            session.invalidate();
+            response.sendRedirect("../login/login.jsp?status=loggedout");
+        }else{
             
-            //Just setting these to bypass authentication for now
-            session.setAttribute("loggedInUser", un);
-            response.sendRedirect("../game/mainplayer.jsp"); return;
-//    }
+            if(userMap ==null){
+                response.sendRedirect("../login/login.jsp?status=regfirst");return;
+            }else{
+                User user = userMap.getUserMap().get(un);
+            
+                //if user DNE
+                if(user==null){
+                    response.sendRedirect("../login/login.jsp?status=invlduser");return;
+                }else if(!user.getPassword().equals(pw)){ //if user pw = entered pw
+                    response.sendRedirect("../login/login.jsp?status=unmatchpw");
+                }else{
+                    session.setAttribute("loggedInUser", un);
+                    response.sendRedirect("../game/mainplayer.jsp"); return;
+                }
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

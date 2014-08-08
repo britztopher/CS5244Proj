@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    
+    <!--CHECKTURN-->
+     <servlet>
+        <servlet-name>checkturn</servlet-name>
+        <jsp-file>/game/checkTurn.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checkturn</servlet-name>
+        <url-pattern>/game/checkTurn.jsp</url-pattern>
+    </servlet-mapping>
+    
     <!--LOGIN-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -66,7 +77,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>OfferedGamesServlet</servlet-name>
-        <url-pattern>/servlet/OfferedGamesServlet</url-pattern>
+        <url-pattern>/game/servlet/OfferedGamesServlet</url-pattern>
     </servlet-mapping>
     <!--START GAME PAGE-->
     <servlet>

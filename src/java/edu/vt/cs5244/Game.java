@@ -81,10 +81,12 @@ public class Game {
     }
  
     public String whosTurn(){
-         Player currPlyr = this.getTheDAB().getTurn();
-         String currTurn = this.getUserNameTwo();
+        Player currPlyr = this.getTheDAB().getTurn();
+        String currTurn = this.getUserNameTwo();
          
-        if(currPlyr.equals(Player.ONE)){
+        if(currPlyr == null){
+            currTurn = null;
+        }else if(currPlyr.equals(Player.ONE)){
             currTurn = this.getUserNameOne();
         }
         

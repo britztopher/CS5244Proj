@@ -25,5 +25,17 @@
                     <input type="button" value="cancel">
                 </p>
         </form>
+        <%
+            String message = request.getParameter("status");
+            if ("loggedout".equals(message)) {
+                %>  <h2>Successfully Logged  Out</h2> <%
+            } else if ("regfirst".equals(message)){
+              %>  <h2>You must register before you log in</h2> <%
+            }else if ("invlduser".equals(message)){
+              %>  <h2>Username is Invalid. Please Try Again.</h2> <%
+            }else if ("unmatchpw".equals(message)){
+              %>  <h2>Password does not match for the username entered.</h2> <%
+            }
+        %>
     </body>
 </html>

@@ -34,16 +34,41 @@
                     //if the logged in user is the one that offered the game
                     //dont show href link to accept page
                     if(session.getAttribute("loggedInUser").equals(game.getOfferorUN())){
-                        %><li><b><%=game.getOfferorUN()%></b>:&nbsp;Game #<%=game.getGameId()%>&nbsp;(size&nbsp;<%=game.getBoardSize()%>)</li><%
+                        %><li><b><%=game.getOfferorUN()%></b>:&nbsp;Game #<%=game.getGameId()%>&nbsp;(size&nbsp;<%=game.getBoardSize()%>)&nbsp;<a href="servlet/OfferedGamesServlet?cmd=retract&gameId=<%=game.getGameId()%>">retract</a></li><%
                     }else{
-                        %><li><%=game.getOfferorUN()%>:&nbsp;<a href="<%=href%>">Game #<%=game.getGameId()%>&nbsp;(size&nbsp;<%=game.getBoardSize()%>)</a></li><%
+                        %><li><%=game.getOfferorUN()%>:&nbsp;<a href="acceptGame.jsp?gameId=<%=game.getGameId()%>">Game #<%=game.getGameId()%></a>&nbsp;(size&nbsp;<%=game.getBoardSize()%>)</li><%
                     }
                 }   
             }
             %><li><a href="startGame.jsp">Offer New Game</a></li>    
-            <ul/><%
+            </ul><%
            
         %>
+        <%
+            String message = request.getParameter("status");
+            if ("success".equals(message)) {
+                %>  <h2>Successfully Retracted Game.</h2> <%
+            } else if ("notyours".equals(message)){
+              %>  <h2>Cannot Retract a Game that You Haven't Offered.</h2> <%
+            }else if ("gameovr".equals(message)){
+              %>  <h2>Game is over</h2> <%
+            }else if ("idnotnum".equals(message)){
+              %>  <h2>Game Id is Not a Number.</h2> <%
+            }else if ("gamenull".equals(message)){
+              %>  <h2>Game Does not Exist in Database. Please try selecting another game.</h2> <%
+            }else if ("gameremoved".equals(message)){
+              %>  <h2>Sorry but game has been retracted from offerer</h2> <%
+            }else if ("gamedne".equals(message)){
+              %>  <h2>Sorry but game <%=request.getParameter("gameId")%> Does Not Exist.  Please select Another game or offer your own.</h2> <%
+            }else if ("accepted".equals(message)){
+              %>  <h2>Cannot Retract a Game that You Haven't Offered.</h2> <%
+            }
+        %>
+        
+        <h2><a href="completedGames.jsp">Completed Games</a></h2>
+        <h2><a href="mainplayer.jsp">Current Games</a></h2>
+        <a href="offeredGames.jsp">Refresh</a><br>
+        <a href="../servlet/LoginServlet">Logout</a>
        
     </body>
 </html>

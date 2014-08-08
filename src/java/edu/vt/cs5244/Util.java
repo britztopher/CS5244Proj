@@ -53,8 +53,6 @@ public class Util {
             myPlayer = "ONE";
         }else if(player == Player.TWO){
             myPlayer = "TWO";
-        }else if(player == null){
-            myPlayer = "Game Over!!";
         }
     
         return myPlayer;

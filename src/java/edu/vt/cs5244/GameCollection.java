@@ -6,7 +6,6 @@
 
 package edu.vt.cs5244;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,13 +31,17 @@ public class GameCollection {
         
         Integer maxKey = Integer.MIN_VALUE;
         
-        for(Integer id : gameMap.keySet()){
-            if(id > maxKey){
-                maxKey = id;
+        if(gameMap.keySet().isEmpty()){
+            maxKey = 1;
+        }else{
+            for(Integer id : gameMap.keySet()){
+                if(id > maxKey){
+                    maxKey = id;
+                }
             }
+            maxKey += 1;
         }
-        
-        return maxKey + 1;
+        return maxKey;
     }
     
     public synchronized HashMap<Integer, Game> getAcceptedGamesByUser(String user){

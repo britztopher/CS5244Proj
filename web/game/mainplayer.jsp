@@ -25,16 +25,16 @@
         <h3>My Turn:</h3>
         <%  
             GameCollection gameMap = (GameCollection)application.getAttribute("gameMap"); 
-           
-            if(gameMap == null){
-                //offer a new Game link
-            }else{
+            
+            if(gameMap !=null){
                 //display collection of games
                 for(Game game : gameMap.getAcceptedGamesByUser(user).values()){
                     String href = "playGame.jsp?gameId="+game.getGameId();                    
-                     %><ul><%
-                    if(game.whosTurn().equals(user)){
-                         if(user.equals(game.getUserNameOne())){
+                    String whosTurn = game.whosTurn();
+                    %><ul><%
+
+                    if(whosTurn != null && game.whosTurn().equals(user)){
+                         if(user.equals(whosTurn)){
                             %><li><a href="<%=href%>"><%=game.getUserNameOne()%>&nbsp;vs.&nbsp<%=game.getUserNameTwo()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
                         }else{
                              %><li><a href="<%=href%>"><%=game.getUserNameTwo()%>&nbsp;vs.&nbsp<%=game.getUserNameOne()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
@@ -42,29 +42,27 @@
                     }
                     %></ul><%
                 }
-                
-            //TODO: NEED TO REFACTOR THIS AREA BECAUSE THERE IS SOME CODE REDUNDANCY
-            //MAYBE MOVE IT INTO ITS OWN METHOD WITHIN GAME OBJECT    
-            %><h3>Opponents Turn:</h3><%
-            
-             for(Game game : gameMap.getAcceptedGamesByUser(user).values()){
-                 //might need to synchronize this because i can see where the href could get overwritten
-                    String href = "playGame.jsp?gameId="+game.getGameId();                    
-                     %><ul><%
-                    if(!game.whosTurn().equals(user)){
-                        
-                        if(!user.equals(game.getUserNameOne())){
-                            %><li><a href="<%=href%>"><%=game.getUserNameOne()%>&nbsp;vs.&nbsp<%=game.getUserNameTwo()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
-                        }else{
-                             %><li><a href="<%=href%>"><%=game.getUserNameTwo()%>&nbsp;vs.&nbsp<%=game.getUserNameOne()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
+
+                //TODO: NEED TO REFACTOR THIS AREA BECAUSE THERE IS SOME CODE REDUNDANCY
+                //MAYBE MOVE IT INTO ITS OWN METHOD WITHIN GAME OBJECT    
+                %><h3>Opponents Turn:</h3><%
+
+                 for(Game game : gameMap.getAcceptedGamesByUser(user).values()){
+                     //might need to synchronize this because i can see where the href could get overwritten
+                        String href = "playGame.jsp?gameId="+game.getGameId();    
+                        String whosTurn = game.whosTurn();
+                         %><ul><%
+                        if(whosTurn != null && !game.whosTurn().equals(user)){
+
+                            if(!user.equals(game.getUserNameOne())){
+                                %><li><a href="<%=href%>"><%=game.getUserNameOne()%>&nbsp;vs.&nbsp<%=game.getUserNameTwo()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
+                            }else{
+                                 %><li><a href="<%=href%>"><%=game.getUserNameTwo()%>&nbsp;vs.&nbsp<%=game.getUserNameOne()%>&nbsp(size&nbsp;<%=game.getBoardSize()%>)</a></li><%     
+                            }
                         }
+                        %></ul><%
                     }
-                    %></ul><%
-                }
             }
-              %><li><a href="startGame.jsp">Offer New Game</a></li>    
-            </ul><%
-           
         %>
     
        
@@ -72,7 +70,7 @@
 
         <h2><a href="completedGames.jsp">Completed Games</a></h2>
         <h2><a href="offeredGames.jsp">Offered Games</a></h2>
-        <a href="mainPlayer.jsp">Refresh</a><br>
-        <a href="edu.vt.cs5244.Login">Logout</a>
+        <a href="mainplayer.jsp">Refresh</a><br>
+        <a href="../servlet/LoginServlet">Logout</a>
     </body>
 </html>

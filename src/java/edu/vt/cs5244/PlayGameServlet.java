@@ -97,6 +97,8 @@ public class PlayGameServlet extends HttpServlet {
         }catch(NumberFormatException nfe){
             //Could not parse gameid
             response.sendRedirect("../playGame.jsp?status=gamenfe&gameId="+gameId); return;
+        }catch(NullPointerException npe){
+            response.sendRedirect("../offeredGames.jsp?status=gamedne&gameId="+gameId); return;
         }
     }
 

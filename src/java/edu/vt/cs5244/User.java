@@ -14,16 +14,22 @@ public class User {
     
     private String username;
     private String password;
-    private String mobile;
+    private String phone1;
+    private String phone2;
+    private String phone3;
+    
     
     public User(){
         
     }
 
-    User(String un, String pw, String mobile) {
+    User(String un, String pw, String phone1, String phone2, String phone3) {
         this.username = un;
         this.password = pw;
-        this.mobile = mobile;
+        this.phone1 = phone1;
+        this.phone2 = phone2;
+        this.phone3 = phone3;
+                
     }
     
     public String getUserName(){
@@ -42,10 +48,24 @@ public class User {
         this.password = password;
     }
           
-    public String getMobile(){
-        return this.mobile;
+    public String getPhone1(){
+        return this.phone1;
     }
-    public void setMobile(String mobile){
-        this.mobile = mobile;
+    public void setPhone1(String phone1){
+        this.phone1 = phone1;
+    }
+        
+    public String getPhone2(){
+        return this.phone2;
+    }
+    public void setPhone2(String phone2){
+        this.phone2 = phone2;
+    }    
+    
+    public String getPhone3(){
+        return this.phone3;
+    }
+    public void setMobile(String phone3){
+        this.phone3= phone3;
     }
 }

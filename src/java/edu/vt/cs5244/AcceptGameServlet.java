@@ -49,6 +49,7 @@ public class AcceptGameServlet extends HttpServlet {
             GameCollection gameMap = (GameCollection)application.getAttribute("gameMap");
             Game game = gameMap.getGameMap().get(Integer.parseInt(gameId));
             
+            game.getGameId();
             if("normal".equals(cmd)){
                 game.setUserNameTwo((String)session.getAttribute("loggedInUser"));
                 game.setUserNameOne(game.getOfferorUN());
@@ -65,6 +66,8 @@ public class AcceptGameServlet extends HttpServlet {
             
         }catch(NumberFormatException nfe){
             response.sendRedirect("../acceptGame.jsp?status=gamenfe"); return;
+        }catch(NullPointerException npe){
+            response.sendRedirect("../offeredGames.jsp?status=gameremoved");
         }
     }
 

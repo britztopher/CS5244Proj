@@ -7,11 +7,12 @@
 package edu.vt.cs5244;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,17 +32,37 @@ public class OfferedGamesServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet OfferredGamesServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet OfferredGamesServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+          //get the Session object
+        HttpSession session = request.getSession();
+
+        //get the context
+        ServletContext application = getServletConfig().getServletContext();
+        
+        //request parameters
+        String gameId = request.getParameter("gameId");
+        String cmd = request.getParameter("cmd");
+       
+        try{
+            GameCollection gameMap = (GameCollection)application.getAttribute("gameMap");
+            Game game;
+            game = gameMap.getGameMap().get(Integer.parseInt(gameId));
+            
+            if("retract".equals(cmd) && session.getAttribute("loggedInUser").equals(game.getOfferorUN())){
+                
+                if(game.getAcceptor()!=null){
+                    response.sendRedirect("../offeredGames.jsp?status=accepted"); return;
+                }
+                
+                gameMap.getGameMap().remove(game.getGameId());
+                response.sendRedirect("../offeredGames.jsp?status=success"); return;
+            }else{
+                response.sendRedirect("../offeredGames.jsp?status=notyours"); return;
+            }
+            
+        }catch(NumberFormatException nfe){
+            response.sendRedirect("../offeredGames.jsp?status=idnotnum"); return;
+        }catch(NullPointerException npe){
+            response.sendRedirect("../offeredGames.jsp?status=gamenull"); return;
         }
     }
 
