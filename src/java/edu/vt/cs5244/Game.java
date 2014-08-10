@@ -21,7 +21,6 @@ public class Game {
     private String offerorUN;
     private final DABEngine theDAB;
     private final int boardSize;
-    private boolean isAccepted;
     private String acceptedUser;
     
     public Game(int size){
