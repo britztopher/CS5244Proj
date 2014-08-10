@@ -47,6 +47,8 @@ public class RegistServlet extends HttpServlet {
         String phone1 = request.getParameter("phone1");
         String phone2 = request.getParameter("phone2");
         String phone3 = request.getParameter("phone3");
+        int digitCnt = 0;
+        int letterCnt = 0;
         
         //set the session object atrributes for login form redirect on failed 
         //registration attempt
@@ -72,8 +74,20 @@ public class RegistServlet extends HttpServlet {
           
             //catch npe and message the user to enter all fields
             Integer phoneNumTotal = phone1.length()+phone2.length()+phone3.length();
-
-            if(un.isEmpty() || pw.isEmpty()){
+            
+            char[] pwChars = pw.toCharArray();
+            
+            for(char pwChar : pwChars){
+                if(Character.isDigit(pwChar)){
+                    digitCnt++;
+                }else if(Character.isAlphabetic(pwChar)){
+                    letterCnt++;
+                }else{
+                    //dont care what it is
+                }
+                
+            }
+            if(un == null || pw.isEmpty()){
                 response.sendRedirect("../registration/registration.jsp?status=emptyField"); return;
             }else if(un.length() < 3 || un.length() >16){
                 session.removeAttribute("un");
@@ -82,6 +96,9 @@ public class RegistServlet extends HttpServlet {
             }else if(!un.matches("^[A-Za-z0-9_]+$")){
                 session.removeAttribute("un");
                 response.sendRedirect("../registration/registration.jsp?status=invldun");return;
+            }else if(digitCnt < 2 || letterCnt < 2){
+                session.removeAttribute("pw");
+                response.sendRedirect("../registration/registration.jsp?status=phoneletsnums");return;
             }else if(pw.length() < 5  || pw.length() > 5 ){
                 session.removeAttribute("pw");
                 response.sendRedirect("../registration/registration.jsp?status=lengthpw");return;
