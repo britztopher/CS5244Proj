@@ -18,12 +18,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel='stylesheet' href='../css/bootstrap.min.css' type='text/css'/>
+        <link rel='stylesheet' href='../css/style.css' type='text/css'/>
         <title>Completed Games Page</title>
     </head>
     <body>
-         <h1>Welcome <%=user%>!</h1>
-        <h2>Completed Games</h2>
-        <h3></h3>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <h1>Welcome <%=user%>!</h1>
+                <h2>Completed Games</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+        
         <%  
             GameCollection gameMap = (GameCollection)application.getAttribute("gameMap"); 
           
@@ -82,8 +90,17 @@
                     
             <h2><a href="mainplayer.jsp">Current Games</a></h2>
             <h2><a href="offeredGames.jsp">Offered Games</a></h2>
-            <a href="completedGames.jsp">Refresh</a><br>
-            <a href="../servlet/LoginServlet">Logout</a>
+          
+             <div class="row">
+                     <div class="col-lg-12 ">
+                          <p>
+                              <a href="completedGames.jsp"><button class="btn btn-primary" type="button" value="Refresh">Refresh</button></a>
+                              <a href="../servlet/LoginServlet"><button class="btn btn-warning" type="button" value="Logout">Logout</button></a>
+                         </p>
+                     </div>
+                </div>
+            </div>
+        </div>
             
     </body>
 </html>

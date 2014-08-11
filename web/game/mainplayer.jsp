@@ -18,11 +18,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Main Page</title>
+        <link rel='stylesheet' href='../css/bootstrap.min.css' type='text/css'/>
+        <link rel='stylesheet' href='../css/style.css' type='text/css'/>
     </head>
     <body>
-        <h1>Welcome <%=user%>!</h1>
-        <h2>Current Games</h2>
-        <h3>My Turn:</h3>
+        
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <h1>Welcome <%=user%>!</h1>
+                <h2>Current Games</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <h3>My Turn:</h3>
+        
         <%  
             GameCollection gameMap = (GameCollection)application.getAttribute("gameMap"); 
             
@@ -45,9 +55,14 @@
 
                 //TODO: NEED TO REFACTOR THIS AREA BECAUSE THERE IS SOME CODE REDUNDANCY
                 //MAYBE MOVE IT INTO ITS OWN METHOD WITHIN GAME OBJECT    
-                %><h3>Opponents Turn:</h3><%
+                %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <h3>Opponents Turn:</h3><%
 
-                 for(Game game : gameMap.getAcceptedGamesByUser(user).values()){
+                    for(Game game : gameMap.getAcceptedGamesByUser(user).values()){
                      //might need to synchronize this because i can see where the href could get overwritten
                         String href = "playGame.jsp?gameId="+game.getGameId();    
                         String whosTurn = game.whosTurn();
@@ -64,13 +79,22 @@
                     }
             }
         %>
-    
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <h2><a href="completedGames.jsp">Completed Games</a></h2>
+                <h2><a href="offeredGames.jsp">Offered Games</a></h2>
+                 <div class="row">
+                    <div class="col-lg-12 ">
+                         <p>
+                             <a href="mainplayer.jsp"><button class="btn btn-primary" type="button" value="Refresh">Refresh</button></a>
+                             <a href="../servlet/LoginServlet"><button class="btn btn-warning" type="button" value="Logout">Logout</button></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
        
-        
-
-        <h2><a href="completedGames.jsp">Completed Games</a></h2>
-        <h2><a href="offeredGames.jsp">Offered Games</a></h2>
-        <a href="mainplayer.jsp">Refresh</a><br>
-        <a href="../servlet/LoginServlet">Logout</a>
     </body>
 </html>

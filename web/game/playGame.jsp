@@ -20,6 +20,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel='stylesheet' href='../css/bootstrap.min.css' type='text/css'/>
+        <link rel='stylesheet' href='../css/style.css' type='text/css'/>
         <title>Play Game Page</title>
         <script>
             var xhr = new XMLHttpRequest();
@@ -66,6 +68,7 @@
         </script>
 
     </head>
+    
             <%  
             String gridDisplay = null;
             String gameId = request.getParameter("gameId");
@@ -124,65 +127,84 @@
         %>
          
         <body>
-        <h1>Hello <%=user%>!</h1>
-        <h2>Game #<%=request.getParameter("gameId")%></h2>
-        <%
-            String message = request.getParameter("status");
-            if ("edgeexists".equals(message)) {
-                %>  <h2>Edge Already Drawn. Please Choose another Edge.</h2> <%
-            } else if ("edgeDrawn".equals(message)){
-              %>  <h2>Success! Edge Drawn</h2> <%
-            }else if ("gameovr".equals(message)){
-              %>  <h2>Game is over</h2> <%
-            }else if ("edgeErr".equals(message)){
-              %>  <h2>DRAW: Edge value must be selected from clickible grid.</h2> <%
-            }else if ("edgenone".equals(message)){
-              %>  <h2>DRAW: Edge value must be selected from grid above.</h2> <%
-            }else if ("edgeoob".equals(message)){
-              %>  <h2>DRAW: Location is Out of Bounds.</h2> <%
-            }else if ("edgenfe".equals(message)){
-              %>  <h2>DRAW: Row and Col values must both be numeric.</h2> <%
-            }else if ("invldcmd".equals(message)){
-              %>  <h2>Please select a Valid Command</h2> <%
-            }else if ("gamenfe".equals(message)){
-              %>  <h2>Please select a Valid Game Id</h2> <%
-            }
-        %>
+            <div class="row">
+            <div class="col-lg-4 col-lg-offset-3">
+                <h1>Welcome <%=user%>!</h1>
+                <h2>Accept a Game</h2>
+                <h2 class="gameId">Game #<%=request.getParameter("gameId")%></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-3">
         
 
-         <%=gridDisplay%>
-         <br/>
-         <% if("ONE".equals(turn)){
-            %>*<%
-         }
-         %>
-         ONE (<%=playerOne%>)&nbsp; - &nbsp;<%=scoreOne%>
-         <br/>
-         <% if("TWO".equals(turn)){
-            %>*<%
-        }
-        %>
-        TWO (<%=playerTwo%>)&nbsp; - &nbsp;<%=scoreTwo%>
-        <%
-            if(playerOne == null){
-                //show nothing
-                
-            }else if(turn.isEmpty()){
-                %><h3>GAME IS OVER!!</h3><% 
-            }else if(user.equals(whosTurn)){
-                %><h3>It's <%=whosTurn%>'s turn</h3><%
-            
-            } %>
+            <%
+                String message = request.getParameter("status");
+                if ("edgeexists".equals(message)) {
+                    %>  <h2>Edge Already Drawn. Please Choose another Edge.</h2> <%
+                } else if ("edgeDrawn".equals(message)){
+                  %>  <h2>Success! Edge Drawn</h2> <%
+                }else if ("gameovr".equals(message)){
+                  %>  <h2>Game is over</h2> <%
+                }else if ("edgeErr".equals(message)){
+                  %>  <h2>DRAW: Edge value must be selected from clickible grid.</h2> <%
+                }else if ("edgenone".equals(message)){
+                  %>  <h2>DRAW: Edge value must be selected from grid above.</h2> <%
+                }else if ("edgeoob".equals(message)){
+                  %>  <h2>DRAW: Location is Out of Bounds.</h2> <%
+                }else if ("edgenfe".equals(message)){
+                  %>  <h2>DRAW: Row and Col values must both be numeric.</h2> <%
+                }else if ("invldcmd".equals(message)){
+                  %>  <h2>Please select a Valid Command</h2> <%
+                }else if ("gamenfe".equals(message)){
+                  %>  <h2>Please select a Valid Game Id</h2> <%
+                }
+            %>
+
+
+             <%=gridDisplay%>
+             <br/>
+             <% if("ONE".equals(turn)){
+                %>*<%
+             }
+             %>
+             ONE (<%=playerOne%>)&nbsp; - &nbsp;<%=scoreOne%>
+             <br/>
+             <% if("TWO".equals(turn)){
+                %>*<%
+            }
+            %>
+            TWO (<%=playerTwo%>)&nbsp; - &nbsp;<%=scoreTwo%>
+            <%
+                if(playerOne == null){
+                    //show nothing
+
+                }else if(turn.isEmpty()){
+                    %><h3>GAME IS OVER!!</h3><% 
+                }else if(user.equals(whosTurn)){
+                    %><h3>It's <%=whosTurn%>'s turn</h3><%
+
+                } %>
             
                 <div id="turnCheck">
-                    <a href="playGame.jsp?gameId=<%=gameId%>&amp;auto=no">Refresh</a> this page to check for a new move.
-                 </div>  
+                    <a href="playGame.jsp?gameId=<%=gameId%>&amp;auto=no"><button class="btn btn-danger" type="button" value="Refresh">Refresh</button></a> this page to check for a new move.
+                    
+                </div>  
    
-        
-        <h2><a href="mainplayer.jsp">Current Games</a></h2>
-        <h2><a href="completedGames.jsp">Completed Games</a></h2>
-        <h2><a href="offeredGames.jsp">Offered Games</a></h2>
-        <a href="playGame.jsp">Refresh</a><br>
-        <a href="../servlet/LoginServlet">Logout</a>
+
+                <h2><a href="mainplayer.jsp">Current Games</a></h2>
+                <h2><a href="completedGames.jsp">Completed Games</a></h2>
+                <h2><a href="offeredGames.jsp">Offered Games</a></h2>
+                <div class="row">
+                     <div class="col-lg-12 ">
+                          <p>
+                              <a href="playGame.jsp"><button class="btn btn-primary" type="button" value="Refresh">Refresh</button></a>
+                              <a href="../servlet/LoginServlet"><button class="btn btn-warning" type="button" value="Logout">Logout</button></a>
+                         </p>
+                     </div>
+                </div>
+            </div>
+            </div>
+        </div>
     </body>
 </html>

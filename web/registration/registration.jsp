@@ -28,9 +28,10 @@
                                 String sucessMsg = request.getParameter("success");
                                 if ("yes".equals(sucessMsg)) {
                                     %>  <h2>Registration Successful!</h2> 
-                                        <a href="../login/login.jsp">Please login to begin<a/>
+                                       
+                                            <a href="../login/login.jsp"><button class="btn btn-warning" type="button" value="Login">Please Login to Begin</button></a>
                                             <br/>OR<br/>
-                                        <a href="../registration/register.jsp">Register another account<a/>
+                                            <a href="../registration/register.js"><button class="btn btn-warning" type="button" value="Register">Register Another Account</button></a>
                                     <%
                                 } else {
                                   %>  <h3>Please Register to Create an Account</h3> 
@@ -42,7 +43,7 @@
                                         <br/>
                                         <div class="input-group">  
                                             <span class="input-group-addon">Password:</span>
-                                            <input class="form-control" type="password" name="pw" value="<%=(session.getAttribute("pw") == null ? "" : session.getAttribute("pw"))%>" size="5" maxlength="5">
+                                            <input class="form-control" type="password" placeholder="must be exactly 5 chars with at least 2 digits and 2 letters" name="pw" value="<%=(session.getAttribute("pw") == null ? "" : session.getAttribute("pw"))%>" size="5" maxlength="5">
                                         </div>
                                         <br/>
                                         <div class="row">
